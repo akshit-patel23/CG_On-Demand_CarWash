@@ -2,7 +2,8 @@ package com.itransform.washer_service.controller;
 
 import com.itransform.washer_service.dto.WasherDto;
 import com.itransform.washer_service.service.WasherService;
-import org.springframework.beans.factory.annotation.Autowired;
+
+
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,8 +12,13 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/washers")
 public class WasherController {
-    @Autowired
-    private WasherService washerService;
+
+    private final WasherService washerService;
+
+    public WasherController(WasherService washerService) {
+        this.washerService = washerService;
+    }
+
 
     @GetMapping
     public List<WasherDto> getAllWashers(){
@@ -35,7 +41,7 @@ public class WasherController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public String deleteWasher(UUID id){
+    public String deleteWasher(@PathVariable UUID id){
         washerService.deleteWasher(id);
         return "Washer Deleted Successfully";
     }
